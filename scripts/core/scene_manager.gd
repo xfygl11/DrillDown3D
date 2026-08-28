@@ -2,7 +2,8 @@
 # 对应 Python SceneManager.py
 extends Node
 
-class_name SceneManager
+# 注意：SceneManager 已在 project.godot 中注册为 autoload 单例
+# 所以这里不使用 class_name 避免冲突
 
 var _scenes: Dictionary = {}
 var _current_scene: String = ""
