@@ -60,3 +60,11 @@ func play_error() -> void:
 
 func play_success() -> void:
 	play_sfx("success")
+
+func set_music_volume(value: float) -> void:
+	music_volume = value
+	_update_volumes()
+
+func set_sfx_volume(value: float) -> void:
+	sfx_volume = value
+	_update_volumes()
