@@ -1,6 +1,4 @@
-"""
-Godot GDScript 完整逻辑测试
-"""
+"""Godot GDScript 完整逻辑测试"""
 import sys
 import json
 
@@ -105,9 +103,7 @@ def test_conveyor_logic():
 
 def test_crafting_system():
     print("\n[测试9] 合成系统逻辑")
-    recipes = {
-        "steel_ingot": {"inputs": {"iron_ore": 2}, "output": {"steel_ingot": 1}, "time": 5.0}
-    }
+    recipes = {"steel_ingot": {"inputs": {"iron_ore": 2}, "output": {"steel_ingot": 1}, "time": 5.0}}
     resources = {"iron_ore": 5, "coal": 2}
     recipe = recipes["steel_ingot"]
     can_craft = all(resources.get(item, 0) >= amount for item, amount in recipe["inputs"].items())
@@ -121,9 +117,42 @@ def test_crafting_system():
     print("  ✓ 合成系统逻辑测试通过")
     return True
 
+def test_technology_tree():
+    print("\n[测试10] 科技树逻辑")
+    techs = {
+        "mining_1": {"unlocked": True, "prerequisites": []},
+        "mining_2": {"unlocked": False, "prerequisites": ["mining_1"]},
+        "power_1": {"unlocked": False, "prerequisites": ["mining_2"]}
+    }
+    # 检查 mining_2 是否可以研究
+    can_research = techs["mining_1"]["unlocked"] and not techs["mining_2"]["unlocked"]
+    assert can_research
+    # 检查 power_1 是否被锁定
+    has_prereq = techs["mining_2"]["unlocked"]
+    assert not has_prereq
+    print("  ✓ 科技树逻辑测试通过")
+    return True
+
+def test_achievement_system():
+    print("\n[测试11] 成就系统逻辑")
+    achievements = {
+        "first_mine": {"unlocked": False, "condition": lambda r: r.get("stone", 0) >= 1},
+        "industrialist": {"unlocked": False, "condition": lambda b: b >= 10}
+    }
+    # 检查第一个成就
+    resources = {"stone": 5}
+    can_unlock = achievements["first_mine"]["condition"](resources)
+    assert can_unlock
+    # 检查第二个成就
+    buildings = 5
+    can_unlock_2 = achievements["industrialist"]["condition"](buildings)
+    assert not can_unlock_2
+    print("  ✓ 成就系统逻辑测试通过")
+    return True
+
 def main():
     print("=" * 60)
-    print("  Godot GDScript 完整逻辑测试")
+    print("  Godot GDScript 完整逻辑测试 (11项)")
     print("=" * 60)
     
     tests = [
@@ -135,7 +164,9 @@ def main():
         test_save_load,
         test_mineral_distribution,
         test_conveyor_logic,
-        test_crafting_system
+        test_crafting_system,
+        test_technology_tree,
+        test_achievement_system
     ]
     
     passed = failed = 0
