@@ -1,8 +1,6 @@
 """
-Godot GDScript 逻辑测试
-验证所有系统逻辑的正确性
+Godot GDScript 完整逻辑测试
 """
-
 import sys
 import json
 
@@ -13,8 +11,6 @@ def test_game_manager():
     assert resources["stone"] == 100
     resources["stone"] -= 50
     assert resources["stone"] == 50
-    if resources["stone"] < 1000:
-        pass
     print("  ✓ GameManager 逻辑测试通过")
     return True
 
@@ -46,11 +42,11 @@ def test_power_network():
     print("\n[测试4] PowerNetwork 逻辑")
     generation = 100.0
     consumption = 80.0
-    assert generation >= consumption, "电力应该充足"
+    assert generation >= consumption
     generation = 50.0
-    assert generation < consumption, "电力应该不足"
+    assert generation < consumption
     utilization = min(100.0, (generation / consumption) * 100)
-    assert abs(utilization - 62.5) < 0.1, f"利用率计算错误: {utilization}"
+    assert abs(utilization - 62.5) < 0.1
     print("  ✓ PowerNetwork 逻辑测试通过")
     return True
 
@@ -103,7 +99,7 @@ def test_conveyor_logic():
     assert removed["type"] == "stone"
     assert len(items) == 1
     fill_pct = (len(items) / max_capacity) * 100
-    assert fill_pct == 28.57
+    assert abs(fill_pct - 28.57) < 0.01
     print("  ✓ 传送带逻辑测试通过")
     return True
 
