@@ -9,6 +9,7 @@ var _scenes: Dictionary = {}
 var _current_scene: String = ""
 var _loading: bool = false
 var _load_progress: float = 0.0
+var _scene: Variant = null
 
 func register_scene(scene_name: String, scene_data: Dictionary) -> void:
 	_scenes[scene_name] = scene_data
