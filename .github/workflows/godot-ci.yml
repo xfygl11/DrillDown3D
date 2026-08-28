@@ -28,15 +28,25 @@ jobs:
           wget -q https://github.com/godotengine/godot/releases/download/4.2.1-stable/Godot_v4.2.1-stable_linux.x86_64.zip
           unzip -q Godot_v4.2.1-stable_linux.x86_64.zip
       
+      - name: Verify Export Presets
+        run: |
+          echo "检查导出配置..."
+          cat export_presets.cfg | head -20
+      
       - name: Build APK
         run: |
           mkdir -p Builds
-          ./Godot_v4.2.1-stable_linux.x86_64 --headless --path . --export-release "Android" Builds/DrillDown3D.apk
-          echo "构建完成"
-          ls -la Builds/
+          ./Godot_v4.2.1-stable_linux.x86_64 --headless --path . --export-release "Android" Builds/DrillDown3D.apk --quit-now
+          if [ -f Builds/DrillDown3D.apk ]; then
+            echo "APK 构建成功!"
+            ls -la Builds/
+          else
+            echo "APK 未找到，尝试其他方式..."
+            ./Godot_v4.2.1-stable_linux.x86_64 --headless --path . --export "Android" Builds/DrillDown3D.apk --quit-now
+            ls -la Builds/
+          fi
       
       - name: Upload APK
-        if: success()
         uses: actions/upload-artifact@v4
         with:
           name: DrillDown3D
