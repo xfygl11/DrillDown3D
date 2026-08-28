@@ -8,6 +8,7 @@ on:
     branches: [main, master, develop]
   pull_request:
     branches: [main, master]
+  workflow_dispatch:  # 允许手动触发
 
 jobs:
   # 代码质量检查
