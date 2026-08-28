@@ -31,11 +31,8 @@ jobs:
       - name: Build APK
         run: |
           mkdir -p Builds
-          ./Godot_v4.2.1-stable_linux.x86_64 \
-            --headless \
-            --path . \
-            --export-release "Android" Builds/DrillDown3D.apk \
-            --quit-now
+          ./Godot_v4.2.1-stable_linux.x86_64 --headless --path . --export-release "Android" Builds/DrillDown3D.apk
+          echo "构建完成"
           ls -la Builds/
       
       - name: Upload APK
