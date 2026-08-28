@@ -12,6 +12,8 @@ const SEPARATOR: String = "=====================================================
 func _ready() -> void:
 	# 初始化系统
 	_init_systems()
+	# 显示主菜单
+	_show_main_menu()
 
 func _init_systems() -> void:
 	print(SEPARATOR)
@@ -25,10 +27,6 @@ func _init_systems() -> void:
 	# 创建 WorldGrid
 	world_grid = load("res://scripts/game/world_grid.gd").new(32, 32, 30)
 	add_child(world_grid)
-	
-	# 创建 HUD
-	hud = load("res://scripts/ui/game_hud.gd").new()
-	add_child(hud)
 	
 	print("[Main] 游戏初始化完成")
 
@@ -52,6 +50,9 @@ func start_game() -> void:
 	if game_manager:
 		game_manager.switch_state(GameManager.GameState.PLAYING)
 	is_running = true
+	# 隐藏主菜单，显示游戏界面
+	_hide_main_menu()
+	_show_game_ui()
 	print("🎮 游戏开始！")
 
 func pause_game() -> void:
@@ -68,6 +69,9 @@ func stop_game() -> void:
 	if game_manager:
 		game_manager.switch_state(GameManager.GameState.MENU)
 	is_running = false
+	# 返回主菜单
+	_show_main_menu()
+	_hide_game_ui()
 	print("⏹ 游戏已停止")
 
 func place_building(building_type: String, x: int, y: int, z: int) -> bool:
@@ -83,6 +87,39 @@ func load_game(filepath: String) -> bool:
 	if game_manager:
 		return game_manager.load_game(filepath)
 	return false
+
+# 界面控制函数
+func _show_main_menu() -> void:
+	# 显示主菜单节点
+	var ui_container = get_node("UIContainer")
+	if ui_container:
+		ui_container.visible = true
+	print("[Main] 显示主菜单")
+
+func _hide_main_menu() -> void:
+	var ui_container = get_node("UIContainer")
+	if ui_container:
+		ui_container.visible = false
+	print("[Main] 隐藏主菜单")
+
+func _show_game_ui() -> void:
+	# 创建并显示HUD
+	if hud == null:
+		hud = load("res://scripts/ui/game_hud.gd").new()
+		add_child(hud)
+	# 显示HUD
+	if hud:
+		hud.visible = true
+		# 初始化HUD显示初始数据
+		if game_manager:
+			hud.update_resources(game_manager.resources)
+			hud.update_time(game_manager.game_day, game_manager.game_time)
+	print("[Main] 显示游戏界面")
+
+func _hide_game_ui() -> void:
+	if hud:
+		hud.visible = false
+	print("[Main] 隐藏游戏界面")
 
 # 按钮回调函数
 func _on_start_pressed() -> void:
