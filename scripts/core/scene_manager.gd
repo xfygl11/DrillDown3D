@@ -14,25 +14,25 @@ func register_scene(scene_name: String, scene_data: Dictionary) -> void:
 	_scenes[scene_name] = scene_data
 	print("[SceneManager] 注册场景: %s" % scene_name)
 
-func load_scene(scene_name: String, additive: bool = false) -> bool:
+func load_scene(scene_name: String, _additive: bool = false) -> bool:
 	if not scene_name in _scenes:
 		print("[SceneManager] 场景不存在: %s" % scene_name)
 		return false
-	
+
 	if _loading:
 		print("[SceneManager] 正在加载中，请稍后")
 		return false
-	
+
 	_loading = true
 	_load_progress = 0.0
 	print("[SceneManager] 开始加载场景: %s" % scene_name)
-	
+
 	# 模拟加载过程
-	var scene = _scenes[scene_name]
+	_scene = _scenes[scene_name]
 	_current_scene = scene_name
 	_loading = false
 	_load_progress = 1.0
-	
+
 	print("[SceneManager] 场景加载完成: %s" % scene_name)
 	return true
 
