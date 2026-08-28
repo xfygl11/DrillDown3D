@@ -1,56 +1,6 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene format=3 uid="uid://2e42ecf8e50b4637"]
 
-[ext_resource type="Script" path="res://scripts/main.gd" id=1_main]
-[ext_resource type="Script" path="res://scripts/ui/game_hud.gd" id=2_hud]
-[ext_resource type="Script" path="res://scripts/ui/resource_panel.gd" id=3_panel]
+[ext_resource type="Script" uid="uid://0d4026bb7b704224" path="res://scripts/main.gd" id="1"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat"]
-bg_color = Color(0.1, 0.1, 0.1, 0.8)
-
-[node name="Game" type="Node"]
-script = ExtResource("1_main")
-
-[node name="GameWorld" type="Node" parent="." ]
-
-[node name="GameHUD" type="CanvasLayer" parent="." ]
-script = ExtResource("2_hud")
-
-[node name="UI" type="Control" parent="GameHUD"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Resources" type="PanelContainer" parent="GameHUD/UI"]
-layout_mode = 1
-offset_left = 10.0
-offset_top = 10.0
-script = ExtResource("3_panel")
-
-[node name="ResourceList" type="VBoxContainer" parent="GameHUD/UI/Resources"]
-layout_mode = 2
-spacing = 5
-
-[node name="Panel" type="Panel" parent="GameHUD/UI/Resources"]
-layout_mode = 2
-theme_override_styles/panel = sub_resource("StyleBoxFlat")
-
-[node name="PowerInfo" type="Label" parent="GameHUD/UI"]
-layout_mode = 1
-offset_left = 10.0
-offset_top = 250.0
-text = "Power: 0/0"
-
-[node name="TimeInfo" type="Label" parent="GameHUD/UI"]
-layout_mode = 1
-offset_left = 10.0
-offset_top = 280.0
-text = "Day 1 - 00:00"
-
-[node name="PauseBtn" type="Button" parent="GameHUD/UI"]
-layout_mode = 1
-offset_right = 100.0
-offset_top = 10.0
-text = "Pause"
+[node name="Game" type="Node" unique_id=2563815252348978866]
+script = ExtResource("1")
