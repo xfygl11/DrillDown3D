@@ -2,7 +2,8 @@
 # 对应 Python GameManager.py
 extends Node
 
-class_name GameManager
+# 注意：GameManager 已在 project.godot 中注册为 autoload 单例
+# 所以这里不使用 class_name 避免冲突
 
 enum GameState {
 	MENU,

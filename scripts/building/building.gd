@@ -75,6 +75,10 @@ func _init(building_type: BuildingType = BuildingType.SHAFT_DRILL, x: int = 0, y
 	type = building_type
 	position = Vector3i(x, y, z)
 
+func _process(delta: float) -> void:
+	# 基础处理逻辑，子类可以重写
+	pass
+
 func on_place() -> void:
 	print("[Building] 建筑放置: %s at %s" % [type, position])
 	is_operational = true

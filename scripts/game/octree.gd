@@ -7,13 +7,13 @@ class_name Octree
 const MAX_PER_CHUNK = 16
 const MAX_DEPTH = 5
 
-var bounds: Rect3
+var bounds: AABB
 var chunks: Array = []
 var children: Array = []
 var depth: int = 0
 
 func _init(center: Vector3, size: float, depth_level: int = 0) -> void:
-	bounds = Rect3(center - Vector3(size/2, size/2, size/2), Vector3(size, size, size))
+	bounds = AABB(center - Vector3(size/2, size/2, size/2), Vector3(size, size, size))
 	depth = depth_level
 
 func insert(chunk) -> bool:
@@ -30,7 +30,7 @@ func insert(chunk) -> bool:
 	else:
 		# 递归插入子节点
 		for child in children:
-			if child.insert(chunk):
+			if child != null and child.insert(chunk):
 				return true
 		return false
 
@@ -58,30 +58,30 @@ func _subdivide() -> void:
 			if child != null and child.insert(chunk):
 				break
 
-func query(rect: Rect3, result: Array = []) -> Array:
-	# 查询与给定矩形相交的所有区块
-	if not bounds.intersects(rect):
+func query(aabb: AABB, result: Array = []) -> Array:
+	# 查询与给定边界框相交的所有区块
+	if not bounds.intersects(aabb):
 		return result
 	
 	if children.size() == 0:
 		for chunk in chunks:
-			if rect.intersects(chunk.bounds):
+			if aabb.intersects(chunk.bounds):
 				result.append(chunk)
 		return result
 	
 	for child in children:
 		if child != null:
-			child.query(rect, result)
+			child.query(aabb, result)
 	
 	return result
 
 func get_nearby_chunks(center: Vector3, radius: float) -> Array:
 	# 获取指定范围内的所有区块
-	var query_rect = Rect3(
+	var query_aabb = AABB(
 		center - Vector3(radius, radius, radius),
 		Vector3(radius * 2, radius * 2, radius * 2)
 	)
-	return query(query_rect)
+	return query(query_aabb)
 
 func remove(chunk) -> bool:
 	# 从八叉树中移除区块

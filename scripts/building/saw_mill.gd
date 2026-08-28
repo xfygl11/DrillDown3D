@@ -5,12 +5,10 @@ extends Building
 class_name SawMill
 
 func _init() -> void:
-	super._init()
-	building_type = BuildingType.SAW_MILL
+	super._init(BuildingType.SAW_MILL)
 	display_name = "锯木厂"
 	size = Vector3i(2, 2, 1)
 	power_consumption = 20.0
-	recipes = []
 	description = "将原木加工成木材"
 
 func _process(delta: float) -> void:

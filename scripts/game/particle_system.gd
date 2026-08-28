@@ -79,7 +79,7 @@ func spawn_particle(type: String, position: Vector3, custom_params: Dictionary =
 	var params = PARTICLE_TYPES.get(type, PARTICLE_TYPES["dust"]).duplicate(true)
 	params.merge(custom_params)
 	
-	var particle_id = str(position) + "_" + type + "_" + Time.get_ticks_msec()
+	var particle_id = str(position) + "_" + type + "_" + str(Time.get_ticks_msec())
 	active_particles[particle_id] = {
 		"type": type,
 		"position": position,

@@ -5,12 +5,10 @@ extends Building
 class_name WaterWheel
 
 func _init() -> void:
-	super._init()
-	building_type = BuildingType.WATER_WHEEL
+	super._init(BuildingType.WATER_WHEEL)
 	display_name = "水轮发电机"
 	size = Vector3i(2, 2, 1)
-	power_output = 20.0
-	recipes = []
+	power_generated = 20.0
 	description = "利用水流产生电力"
 
 func _process(delta: float) -> void:

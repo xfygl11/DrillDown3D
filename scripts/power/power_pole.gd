@@ -5,12 +5,9 @@ extends Building
 class_name PowerPole
 
 func _init() -> void:
-	super._init()
-	building_type = BuildingType.POWER_POLE
+	super._init(BuildingType.POWER_POLE)
 	display_name = "电线杆"
 	size = Vector3i(1, 3, 1)
-	power_consumption = 0.0
-	recipes = []
 	description = "架设高压输电线路"
 
 func _process(delta: float) -> void:
