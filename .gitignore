@@ -1,0 +1,65 @@
+# Godot 编辑器缓存
+*.tscn.bak
+*.scn.bak
+*.import/
+.godot/
+.idea/
+.vscode/
+*.log
+
+# 导出配置
+export_presets.cfg.bak
+
+# Android 构建输出
+*.apk
+*.aab
+*.xcframework/
+*.ipa
+
+# Windows 构建输出
+*.exe
+*.pdb
+*.dll
+
+# macOS 构建输出
+*.app
+*.dSYM
+
+# Linux 构建输出
+*.xpi
+
+# 临时文件
+*.tmp
+*.temp
+*~
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# 大型资源（如果有的话）
+*.png
+*.jpg
+*.jpeg
+*.bmp
+*.ogg
+*.mp3
+*.wav
+*.mp4
+*.mov
+
+# Unity（如果将来需要）
+Library/
+Temp/
+Obj/
+Builds/
+*.csproj
+*.sln
+*.unityproj
