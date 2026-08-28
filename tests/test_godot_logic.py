@@ -96,8 +96,8 @@ def test_conveyor_logic():
     removed = items.pop(0)
     assert removed["type"] == "stone"
     assert len(items) == 1
-    fill_pct = (len(items) / max_capacity) * 100
-    assert 28.0 <= fill_pct <= 29.0
+    fill_pct = len(items) / max_capacity * 100
+    assert 28 <= fill_pct <= 29
     print("  ✓ 传送带逻辑测试通过")
     return True
 
@@ -167,9 +167,31 @@ def test_tech_research():
     print("  ✓ 科技研究逻辑测试通过")
     return True
 
+def test_city_system():
+    print("\n[测试14] 城市系统逻辑")
+    population = 50
+    max_pop = 100
+    happiness = 60.0
+    assert population < max_pop
+    happiness = max(0, min(100, happiness - 10))
+    assert happiness == 50.0
+    demands = {"food": 10, "tools": 5}
+    total = sum(demands.values())
+    assert total == 15
+    print("  ✓ 城市系统逻辑测试通过")
+    return True
+
+def test_crusher_logic():
+    print("\n[测试15] 破碎机逻辑")
+    input_item = {"type": "stone", "amount": 10}
+    output_amount = int(input_item["amount"] * 1.5)
+    assert output_amount == 15
+    print("  ✓ 破碎机逻辑测试通过")
+    return True
+
 def main():
     print("=" * 60)
-    print("  Godot GDScript 完整逻辑测试 (13项)")
+    print("  Godot GDScript 完整逻辑测试 (15项)")
     print("=" * 60)
     
     tests = [
@@ -185,7 +207,9 @@ def main():
         test_technology_tree,
         test_achievement_system,
         test_resource_manager,
-        test_tech_research
+        test_tech_research,
+        test_city_system,
+        test_crusher_logic
     ]
     
     passed = failed = 0
