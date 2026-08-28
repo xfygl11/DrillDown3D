@@ -46,8 +46,15 @@ func has_resource(type: String, amount: int) -> bool:
 func get_resource(type: String) -> int:
 	return resources.get(type, 0)
 
+static func _sum_array(arr: Array) -> int:
+	var total: int = 0
+	for v in arr:
+		if typeof(v) == TYPE_INT:
+			total += v as int
+	return total
+
 func get_total_resources() -> int:
-	return resources.values().sum()
+	return _sum_array(resources.values())
 
 func clear_all() -> void:
 	for key in resources:

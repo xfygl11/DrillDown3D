@@ -31,9 +31,16 @@ func remove_item(item_type: String, amount: int) -> Dictionary:
 	print("[Warehouse] 取出: %s x%d" % [item_type, actual_amount])
 	return {"type": item_type, "amount": actual_amount}
 
+static func _sum_array(arr: Array) -> int:
+	var total: int = 0
+	for v in arr:
+		if typeof(v) == TYPE_INT:
+			total += v as int
+	return total
+
 func get_storage_info() -> Dictionary:
 	return {
-		"filled": stored_items.values().sum(),
+		"filled": _sum_array(stored_items.values()),
 		"capacity": storage_capacity,
 		"items": stored_items.duplicate()
 	}

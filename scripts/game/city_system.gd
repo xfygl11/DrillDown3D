@@ -44,11 +44,18 @@ func fulfill_demand(demand_type: String, amount: int) -> bool:
 	demand_updated.emit(demand_type, -amount)
 	return true
 
+static func _sum_array(arr: Array) -> int:
+	var total: int = 0
+	for v in arr:
+		if typeof(v) == TYPE_INT:
+			total += v as int
+	return total
+
 func get_satisfaction_rate() -> float:
-	var total_demands = demands.values().sum()
+	var total_demands = _sum_array(demands.values())
 	if total_demands == 0:
 		return 100.0
-	return 100.0 - (demands.values().sum() / max_population) * 100
+	return 100.0 - (_sum_array(demands.values()) / max_population) * 100
 
 func can_support_population(new_pop: int) -> bool:
 	return new_pop <= max_population

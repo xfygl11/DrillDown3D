@@ -1,5 +1,4 @@
 # ObjectPool - 对象池
-# 对应 Python ObjectPool.py
 extends Node
 
 class_name ObjectPool
@@ -31,14 +30,11 @@ func release(obj: Variant) -> void:
 		_pool.append(obj)
 	_active_count -= 1
 
-@property
-var size() -> int:
+func get_size() -> int:
 	return _pool.size()
 
-@property
-var active_count() -> int:
+func get_active_count() -> int:
 	return _active_count
 
-@property
-var total_count() -> int:
+func get_total_count() -> int:
 	return _pool.size() + _active_count

@@ -4,6 +4,10 @@ extends "res://scripts/building/building.gd"
 class_name Boiler
 
 var steam_output: float = 10.0
+var _power_network: PowerNetwork = null
+
+func _ready() -> void:
+	_power_network = get_node("/root/PowerNetwork")
 
 func _init(x: int, y: int, z: int) -> void:
 	super._init(BuildingType.BOILER, x, y, z)
@@ -16,8 +20,10 @@ func generate(delta_time: float) -> float:
 func on_place() -> void:
 	super.on_place()
 	print("[Boiler] 锅炉放置于 %s" % position)
-	PowerNetwork.add_source(self)
+	if _power_network:
+		_power_network.add_source(self)
 
 func on_remove() -> void:
 	super.on_remove()
-	PowerNetwork.remove_source(self)
+	if _power_network:
+		_power_network.remove_source(self)

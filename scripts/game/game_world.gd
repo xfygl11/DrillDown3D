@@ -9,8 +9,10 @@ var fluid_grid: FluidGrid
 var mining_system: MiningSystem
 var crafting_system: CraftingSystem
 var buildings: Array = []
+var audio_manager: AudioManager = null
 
 func _ready() -> void:
+	audio_manager = get_node("/root/AudioManager")
 	_initialize_systems()
 	_setup_connections()
 
@@ -57,10 +59,12 @@ func _process(delta: float) -> void:
 
 func _on_resource_gathered(resource_type: String, amount: int) -> void:
 	GameManager.add_resource(resource_type, amount)
-	AudioManager.play_mine()
+	if audio_manager:
+		audio_manager.play_mine()
 
 func _on_mining_complete(tile_type: String) -> void:
-	AudioManager.play_success()
+	if audio_manager:
+		audio_manager.play_success()
 
 func _handle_output(building: Building, output: Dictionary) -> void:
 	if output.type in GameManager.resources:
