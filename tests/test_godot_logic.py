@@ -97,7 +97,7 @@ def test_conveyor_logic():
     assert removed["type"] == "stone"
     assert len(items) == 1
     fill_pct = len(items) / max_capacity * 100
-    assert fill_pct >= 28.0 and fill_pct <= 29.0
+    assert 28.0 <= fill_pct <= 29.0
     print("  ✓ 传送带逻辑测试通过")
     return True
 
