@@ -9,9 +9,11 @@ class_name TechPanel
 
 var selected_tech: String = ""
 var tech_tree: TechnologyTree = null
+var audio_manager: AudioManager = null
 
 func _ready() -> void:
 	tech_tree = get_node("/root/TechnologyTree")
+	audio_manager = get_node("/root/AudioManager")
 	_setup_tech_list()
 	research_btn.pressed.connect(_on_research_pressed)
 
@@ -54,7 +56,7 @@ func _format_cost(cost: Dictionary) -> String:
 func _on_research_pressed() -> void:
 	if tech_tree.can_research(selected_tech):
 		tech_tree.start_research(selected_tech)
-		AudioManager.play_success()
+		audio_manager.play_success()
 
 func show_panel() -> void:
 	visible = true
