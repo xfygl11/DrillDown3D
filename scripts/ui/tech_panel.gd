@@ -52,8 +52,8 @@ func _on_research_pressed() -> void:
 		TechnologyTree.start_research(selected_tech)
 		AudioManager.play_success()
 
-func show() -> void:
+func show_panel() -> void:
 	visible = true
 
-func hide() -> void:
+func hide_panel() -> void:
 	visible = false
