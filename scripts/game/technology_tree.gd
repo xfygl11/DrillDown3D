@@ -6,7 +6,7 @@ class_name TechnologyTree
 signal technology_unlocked(tech_id: String)
 signal research_complete(tech_id: String)
 
-const technologies: Dictionary = {
+var technologies: Dictionary = {
 	"mining_1": {
 		"name": "Basic Mining",
 		"description": "Unlock basic stone mining",
@@ -46,7 +46,10 @@ const technologies: Dictionary = {
 
 var research_progress: Dictionary = {}
 
-static func can_research(tech_id: String) -> bool:
+func get_technologies() -> Dictionary:
+	return technologies
+
+func can_research(tech_id: String) -> bool:
 	if not tech_id in technologies:
 		return false
 	var tech = technologies[tech_id]
@@ -65,7 +68,7 @@ static func can_research(tech_id: String) -> bool:
 	
 	return true
 
-static func start_research(tech_id: String) -> bool:
+func start_research(tech_id: String) -> bool:
 	if not can_research(tech_id):
 		return false
 	

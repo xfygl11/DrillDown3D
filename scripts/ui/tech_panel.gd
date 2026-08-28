@@ -8,14 +8,17 @@ class_name TechPanel
 @onready var research_btn: Button = $Panel/VBox/ResearchBtn
 
 var selected_tech: String = ""
+var tech_tree: TechnologyTree = null
 
 func _ready() -> void:
+	tech_tree = get_node("/root/TechnologyTree")
 	_setup_tech_list()
 	research_btn.pressed.connect(_on_research_pressed)
 
 func _setup_tech_list() -> void:
-	for tech_id in TechnologyTree.technologies:
-		var tech = TechnologyTree.technologies[tech_id]
+	var technologies = tech_tree.get_technologies()
+	for tech_id in technologies:
+		var tech = technologies[tech_id]
 		var btn = Button.new()
 		btn.text = "%s %s" % [
 			"🔓" if tech["unlocked"] else "🔒",
@@ -26,7 +29,8 @@ func _setup_tech_list() -> void:
 
 func _on_tech_selected(tech_id: String) -> void:
 	selected_tech = tech_id
-	var tech = TechnologyTree.technologies[tech_id]
+	var technologies = tech_tree.get_technologies()
+	var tech = technologies[tech_id]
 	selected_info.text = """
 <b>%s</b>
 
@@ -39,7 +43,7 @@ func _on_tech_selected(tech_id: String) -> void:
 		tech["description"],
 		_format_cost(tech["cost"])
 	]
-	research_btn.disabled = not TechnologyTree.can_research(tech_id)
+	research_btn.disabled = not tech_tree.can_research(tech_id)
 
 func _format_cost(cost: Dictionary) -> String:
 	var text = ""
@@ -48,8 +52,8 @@ func _format_cost(cost: Dictionary) -> String:
 	return text
 
 func _on_research_pressed() -> void:
-	if TechnologyTree.can_research(selected_tech):
-		TechnologyTree.start_research(selected_tech)
+	if tech_tree.can_research(selected_tech):
+		tech_tree.start_research(selected_tech)
 		AudioManager.play_success()
 
 func show_panel() -> void:

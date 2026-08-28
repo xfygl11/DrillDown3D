@@ -61,10 +61,10 @@ func play_error() -> void:
 func play_success() -> void:
 	play_sfx("success")
 
-static func set_music_volume(value: float) -> void:
-	AudioManager.instance.music_volume = value
-	AudioManager.instance._update_volumes()
+func set_music_volume(value: float) -> void:
+	music_volume = value
+	_update_volumes()
 
-static func set_sfx_volume(value: float) -> void:
-	AudioManager.instance.sfx_volume = value
-	AudioManager.instance._update_volumes()
+func set_sfx_volume(value: float) -> void:
+	sfx_volume = value
+	_update_volumes()
