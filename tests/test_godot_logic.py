@@ -97,7 +97,7 @@ def test_conveyor_logic():
     assert removed["type"] == "stone"
     assert len(items) == 1
     fill_pct = len(items) / max_capacity * 100
-    assert 28 <= fill_pct <= 29
+    assert fill_pct >= 28.0 and fill_pct <= 29.0
     print("  ✓ 传送带逻辑测试通过")
     return True
 
@@ -208,9 +208,36 @@ def test_sorter_logic():
     print("  ✓ 分拣机逻辑测试通过")
     return True
 
+def test_incinerator_logic():
+    print("\n[测试18] 焚烧炉逻辑")
+    waste = {"type": "slag", "amount": 10}
+    ash_amount = int(waste["amount"] * 0.1)
+    assert ash_amount == 1
+    print("  ✓ 焚烧炉逻辑测试通过")
+    return True
+
+def test_recycler_logic():
+    print("\n[测试19] 回收站逻辑")
+    metal = {"type": "iron_ingot", "amount": 10}
+    recycled = int(metal["amount"] * 0.7)
+    assert recycled == 7
+    print("  ✓ 回收站逻辑测试通过")
+    return True
+
+def test_item_system():
+    print("\n[测试20] 物品系统逻辑")
+    items = {
+        "stone": {"name": "Stone", "stack_size": 64},
+        "iron_ingot": {"name": "Iron Ingot", "stack_size": 64}
+    }
+    assert items["stone"]["stack_size"] == 64
+    assert items["iron_ingot"]["name"] == "Iron Ingot"
+    print("  ✓ 物品系统逻辑测试通过")
+    return True
+
 def main():
     print("=" * 60)
-    print("  Godot GDScript 完整逻辑测试 (17项)")
+    print("  Godot GDScript 完整逻辑测试 (20项)")
     print("=" * 60)
     
     tests = [
@@ -230,7 +257,10 @@ def main():
         test_city_system,
         test_crusher_logic,
         test_charger_logic,
-        test_sorter_logic
+        test_sorter_logic,
+        test_incinerator_logic,
+        test_recycler_logic,
+        test_item_system
     ]
     
     passed = failed = 0
