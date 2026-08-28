@@ -1,9 +1,7 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene format=3 uid="uid://622afaec42514169"]
 
-[ext_resource type="Script" path="res://scripts/main.gd" id=1_main]
-[ext_resource type="Script" path="res://scripts/ui/game_hud.gd" id=2_hud]
-[ext_resource type="Script" path="res://scripts/ui/build_panel.gd" id=3_build]
-[ext_resource type="Script" path="res://scripts/ui/resource_panel.gd" id=4_resource]
+[ext_resource type="Script" uid="uid://351b66d8343b4653" path="res://scripts/main.gd" id="1"]
+[ext_resource type="Script" uid="uid://ced198511270406a" path="res://scripts/ui/game_hud.gd" id="2"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bg"]
 bg_color = Color(0.05, 0.05, 0.1, 1)
@@ -11,10 +9,17 @@ bg_color = Color(0.05, 0.05, 0.1, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
 bg_color = Color(0.1, 0.1, 0.15, 0.9)
 
-[node name="Main" type="CanvasLayer"]
-script = ExtResource("1_main")
+[node name="Main" type="CanvasLayer" unique_id=12954691620912844653]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1")
 
-[node name="Background" type="ColorRect" parent="."]
+[node name="Background" type="ColorRect" parent="." unique_id=8512086106411126741]
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -22,7 +27,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.02, 0.02, 0.05, 1)
 
-[node name="UI" type="Control" parent="."]
+[node name="UIContainer" type="Control" parent="." unique_id=9453074036317110793]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -30,22 +35,22 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TitlePanel" type="Panel" parent="UI"]
+[node name="TitlePanel" type="Panel" parent="UIContainer" unique_id=6299932857584340827]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -300.0
-offset_top = -200.0
-offset_right = 300.0
-offset_bottom = -100.0
+offset_left = -250.0
+offset_top = -150.0
+offset_right = 250.0
+offset_bottom = 50.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = sub_resource("StyleBoxFlat_panel")
 
-[node name="TitleLabel" type="Label" parent="UI/TitlePanel"]
+[node name="TitleLabel" type="Label" parent="TitlePanel" unique_id=8456766233552699645]
 layout_mode = 2
 anchors_preset = 10
 anchor_right = 1.0
@@ -56,7 +61,7 @@ text = "DrillDown 3D"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="SubtitleLabel" type="Label" parent="UI/TitlePanel"]
+[node name="SubtitleLabel" type="Label" parent="TitlePanel" unique_id=13823004372871236289]
 layout_mode = 2
 anchors_preset = 10
 anchor_right = 1.0
@@ -68,7 +73,7 @@ text = "地下工厂建造游戏"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="MenuButtons" type=" VBoxContainer" parent="UI/TitlePanel"]
+[node name="ButtonContainer" type="VBoxContainer" parent="TitlePanel" unique_id=6002545847479258932]
 layout_mode = 2
 anchors_preset = 10
 anchor_right = 1.0
@@ -77,51 +82,46 @@ offset_bottom = 200.0
 grow_horizontal = 2
 theme_override_constants/separation = 20
 
-[node name="StartButton" type="Button" parent="UI/TitlePanel/MenuButtons"]
+[node name="StartButton" type="Button" parent="TitlePanel/ButtonContainer" unique_id=4747144328816315101]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "开始游戏"
 
-[node name="SettingsButton" type="Button" parent="UI/TitlePanel/MenuButtons"]
+[node name="SettingsButton" type="Button" parent="TitlePanel/ButtonContainer" unique_id=13744383737838650369]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "设置"
 
-[node name="ExitButton" type="Button" parent="UI/TitlePanel/MenuButtons"]
+[node name="ExitButton" type="Button" parent="TitlePanel/ButtonContainer" unique_id=275882016908922128]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "退出"
 
-[node name="GameHUD" type="CanvasLayer" parent="."]
+[node name="GameHUD" type="CanvasLayer" parent="." unique_id=17722520409279841619]
 layer = 10
+visible = false
 
-[node name="ResourceHUD" type="PanelContainer" parent="GameHUD"]
+[node name="ResourceLabel" type="Label" parent="GameHUD" unique_id=9031961204638502151]
 layout_mode = 1
 offset_left = 10.0
 offset_top = 10.0
-script = ExtResource("4_resource")
+text = "资源: 石头=0"
+theme_override_font_sizes/font_size = 18
 
-[node name="BuildPanel" type="PanelContainer" parent="GameHUD"]
+[node name="PowerLabel" type="Label" parent="GameHUD" unique_id=13195691140557914799]
 layout_mode = 1
 offset_left = 10.0
-offset_top = 100.0
-script = ExtResource("3_build")
-visible = false
-
-[node name="PowerDisplay" type="Label" parent="GameHUD"]
-layout_mode = 1
-offset_left = 10.0
-offset_top = 200.0
+offset_top = 40.0
 text = "电力: 0/0"
 theme_override_font_sizes/font_size = 18
 
-[node name="TimeDisplay" type="Label" parent="GameHUD"]
+[node name="TimeLabel" type="Label" parent="GameHUD" unique_id=9824624924346763174]
 layout_mode = 1
 offset_left = 10.0
-offset_top = 230.0
+offset_top = 70.0
 text = "第1天 00:00"
 theme_override_font_sizes/font_size = 18
 
-[connection signal="pressed" from="UI/TitlePanel/MenuButtons/StartButton" to="Main" method="_on_start_pressed"]
-[connection signal="pressed" from="UI/TitlePanel/MenuButtons/SettingsButton" to="Main" method="_on_settings_pressed"]
-[connection signal="pressed" from="UI/TitlePanel/MenuButtons/ExitButton" to="Main" method="_on_exit_pressed"]
+[connection signal="pressed" from="TitlePanel/ButtonContainer/StartButton" to="Main" method="_on_start_pressed"]
+[connection signal="pressed" from="TitlePanel/ButtonContainer/SettingsButton" to="Main" method="_on_settings_pressed"]
+[connection signal="pressed" from="TitlePanel/ButtonContainer/ExitButton" to="Main" method="_on_exit_pressed"]
