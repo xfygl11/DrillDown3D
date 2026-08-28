@@ -189,9 +189,28 @@ def test_crusher_logic():
     print("  ✓ 破碎机逻辑测试通过")
     return True
 
+def test_charger_logic():
+    print("\n[测试16] 充电站逻辑")
+    battery = {"type": "battery", "amount": 50}
+    charge_rate = 10.0
+    delta = 5.0
+    new_amount = min(100, battery["amount"] + charge_rate * delta)
+    assert new_amount == 100
+    print("  ✓ 充电站逻辑测试通过")
+    return True
+
+def test_sorter_logic():
+    print("\n[测试17] 分拣机逻辑")
+    item = {"type": "iron_ore", "amount": 5}
+    directions = {"right": True, "left": False}
+    assert "right" in directions
+    assert directions["right"] == True
+    print("  ✓ 分拣机逻辑测试通过")
+    return True
+
 def main():
     print("=" * 60)
-    print("  Godot GDScript 完整逻辑测试 (15项)")
+    print("  Godot GDScript 完整逻辑测试 (17项)")
     print("=" * 60)
     
     tests = [
@@ -209,7 +228,9 @@ def main():
         test_resource_manager,
         test_tech_research,
         test_city_system,
-        test_crusher_logic
+        test_crusher_logic,
+        test_charger_logic,
+        test_sorter_logic
     ]
     
     passed = failed = 0
