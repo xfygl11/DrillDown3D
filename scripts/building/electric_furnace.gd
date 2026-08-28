@@ -47,6 +47,5 @@ func _get_output_type(input_type: String) -> String:
 	}
 	return outputs.get(input_type, "slag")
 
-@property
-var power_demand() -> float:
+func get_power_demand() -> float:
 	return power_consumption if is_operational else 0.0

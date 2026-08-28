@@ -42,7 +42,7 @@ func _handle_tap(position: Vector2) -> void:
 	tile_clicked.emit(tile_x, tile_y, 0)
 
 func _toggle_pause() -> void:
-	var paused = not get_viewport().input_mode == Viewport.INPUT_MODE_GAMEPAD
+	var paused = true
 	game_paused.emit(paused)
 
 func _save_game() -> void:

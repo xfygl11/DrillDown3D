@@ -30,7 +30,7 @@ func start_construction(building_type: String, cost: Dictionary) -> bool:
 	
 	# 扣除材料
 	for item in cost:
-		remove_resource(item, cost[item])
+		GameManager.remove_resource(item, cost[item])
 	
 	build_queue.append({
 		"type": building_type,

@@ -28,9 +28,16 @@ var achievements: Dictionary = {
 		"name": "Electric Age",
 		"description": "Unlock electricity",
 		"unlocked": false,
-		"condition": func(): return TechnologyTree.technologies.get("power_2", {}).get("unlocked", false)
+		"condition": func(): return _check_electric_age()
 	}
 }
+
+var audio_manager: AudioManager = null
+var tech_tree: TechnologyTree = null
+
+func _ready() -> void:
+	audio_manager = get_node("/root/AudioManager")
+	tech_tree = get_node("/root/TechnologyTree")
 
 func check_achievement(achievement_id: String) -> bool:
 	if achievement_id not in achievements:
@@ -44,8 +51,14 @@ func check_achievement(achievement_id: String) -> bool:
 		achievement["unlocked"] = true
 		achievement_unlocked.emit(achievement_id)
 		print("[Achievement] 成就解锁: %s" % achievement["name"])
-		AudioManager.play_success()
+		if audio_manager:
+			audio_manager.play_success()
 		return true
+	return false
+
+func _check_electric_age() -> bool:
+	if tech_tree:
+		return tech_tree.get_technologies().get("power_2", {}).get("unlocked", false)
 	return false
 
 func check_all_achievements(data: Dictionary) -> void:

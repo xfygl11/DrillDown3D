@@ -39,8 +39,8 @@ func update_time(day: int, time: float) -> void:
 	_update_time_display()
 
 func _update_time_display() -> void:
-	var hours = int(game_time / 60)
-	var minutes = int(game_time % 60)
+	var hours = int(game_time / 60.0)
+	var minutes = int(fmod(game_time, 60.0))
 	print("[HUD] 时间: 第%d天 %02d:%02d" % [game_day, hours, minutes])
 
 func toggle_pause() -> bool:

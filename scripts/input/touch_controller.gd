@@ -10,6 +10,10 @@ signal camera_moved(delta: Vector2)
 var is_dragging: bool = false
 var drag_start: Vector2 = Vector2.ZERO
 const DRAG_THRESHOLD: float = 10.0
+var audio_manager: AudioManager = null
+
+func _ready() -> void:
+	audio_manager = get_node("/root/AudioManager")
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventScreenTouch:
@@ -41,4 +45,5 @@ func _handle_tap(position: Vector2) -> void:
 	var tile_x = int(position.x / 40)
 	var tile_y = int(position.y / 40)
 	tile_selected.emit(tile_x, tile_y)
-	AudioManager.play_click()
+	if audio_manager:
+		audio_manager.play_click()

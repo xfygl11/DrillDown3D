@@ -6,12 +6,17 @@ class_name AchievementPanel
 @onready var achievement_list: VBoxContainer = $Panel/VBox/AchievementList
 @onready var progress_label: Label = $Panel/VBox/ProgressLabel
 
+var achievement_system: AchievementSystem = null
+
 func _ready() -> void:
+	achievement_system = get_node("/root/AchievementSystem")
 	_setup_achievement_list()
 
 func _setup_achievement_list() -> void:
-	for achievement_id in AchievementSystem.achievements:
-		var achievement = AchievementSystem.achievements[achievement_id]
+	if not achievement_system:
+		return
+	for achievement_id in achievement_system.achievements:
+		var achievement = achievement_system.achievements[achievement_id]
 		var h_box = HBoxContainer.new()
 		
 		var icon = Label.new()
@@ -33,13 +38,15 @@ func _setup_achievement_list() -> void:
 	_update_progress()
 
 func _update_progress() -> void:
-	var unlocked = AchievementSystem.get_unlocked_count()
-	var total = AchievementSystem.get_total_count()
+	if not achievement_system:
+		return
+	var unlocked = achievement_system.get_unlocked_count()
+	var total = achievement_system.get_total_count()
 	progress_label.text = "Progress: %d/%d" % [unlocked, total]
 
-func show() -> void:
+func show_panel() -> void:
 	visible = true
 	_update_progress()
 
-func hide() -> void:
+func hide_panel() -> void:
 	visible = false

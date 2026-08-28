@@ -9,6 +9,7 @@ signal building_selected(type: String)
 @onready var selected_label: Label = $VBox/SelectedLabel
 
 var selected_building: String = ""
+var audio_manager: AudioManager = null
 
 const BUILDING_TYPES = [
 	{"name": "ShaftDrill", "icon": "🔨", "cost": {"stone": 10}},
@@ -20,6 +21,7 @@ const BUILDING_TYPES = [
 ]
 
 func _ready() -> void:
+	audio_manager = get_node("/root/AudioManager")
 	_setup_build_buttons()
 
 func _setup_build_buttons() -> void:
@@ -33,7 +35,8 @@ func _on_building_selected(building_type: String) -> void:
 	selected_building = building_type
 	selected_label.text = "Selected: %s" % building_type
 	building_selected.emit(building_type)
-	AudioManager.play_click()
+	if audio_manager:
+		audio_manager.play_click()
 
 func is_building_selected() -> bool:
 	return selected_building != ""
