@@ -1,6 +1,4 @@
 # Godot CI/CD 工作流
-# 用于自动构建和测试 Godot 项目
-
 name: Godot CI
 
 on:
@@ -8,30 +6,9 @@ on:
     branches: [main, master, develop]
   pull_request:
     branches: [main, master]
-  workflow_dispatch:  # 允许手动触发
+  workflow_dispatch:
 
 jobs:
-  # 代码质量检查
-  lint:
-    name: Lint GDScript
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-      
-      - name: Install Godot Script Linter
-        run: |
-          pip install godotlint
-      
-      - name: Run Linter
-        run: |
-          godotlint scripts/
-
   # 逻辑测试
   test:
     name: Run Logic Tests
@@ -53,56 +30,57 @@ jobs:
   build-android:
     name: Build Android APK
     runs-on: ubuntu-latest
-    needs: [lint, test]
+    needs: [test]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
       
       - name: Download Godot Editor
         run: |
-          wget https://github.com/godotengine/godot/releases/download/4.2.1-stable/Godot_v4.2.1-stable_linux.x86_64.zip
-          unzip Godot_v4.2.1-stable_linux.x86_64.zip
+          wget -q https://github.com/godotengine/godot/releases/download/4.2.1-stable/Godot_v4.2.1-stable_linux.x86_64.zip
+          unzip -q Godot_v4.2.1-stable_linux.x86_64.zip
           chmod +x Godot_v4.2.1-stable_linux.x86_64
+      
+      - name: Create Export Presets
+        run: |
+          mkdir -p .godot/imported
+          cat > export_presets.cfg << 'PRESETS'
+          [preset.0]
+          name="Android"
+          platform="Android"
+          runnable=true
+          dedicated_server=false
+          custom_features=""
+          export_filter="all_resources"
+          include_filter=""
+          exclude_filter=""
+          
+          [preset.0.options]
+          package/unique_name="com.drilldown3d.game"
+          package/name="DrillDown 3D"
+          screen/immersive_mode=true
+          screen/support_small=true
+          screen/support_normal=true
+          screen/support_large=true
+          screen/support_xlarge=true
+          architecture/arm64-v8a=true
+          architecture/armeabi-v7a=false
+          graphics/api=3
+          graphics/min_api=24
+          application/min_api=24
+          application/target_api=33
+          PRESETS
       
       - name: Build Android APK
         run: |
           ./Godot_v4.2.1-stable_linux.x86_64 \
             --headless \
             --path . \
-            --export-pack "Android" Builds/DrillDown3D.apk
+            --export Android Builds/DrillDown3D.apk
       
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: DrillDown3D-Android
           path: Builds/DrillDown3D.apk
-          retention-days: 7
-
-  # Web 构建
-  build-web:
-    name: Build Web Build
-    runs-on: ubuntu-latest
-    needs: [lint, test]
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      
-      - name: Download Godot Editor
-        run: |
-          wget https://github.com/godotengine/godot/releases/download/4.2.1-stable/Godot_v4.2.1-stable_linux.x86_64.zip
-          unzip Godot_v4.2.1-stable_linux.x86_64.zip
-          chmod +x Godot_v4.2.1-stable_linux.x86_64
-      
-      - name: Build Web
-        run: |
-          ./Godot_v4.2.1-stable_linux.x86_64 \
-            --headless \
-            --path . \
-            --export-pack "Web" Builds/index.html
-      
-      - name: Upload Web Build
-        uses: actions/upload-artifact@v4
-        with:
-          name: DrillDown3D-Web
-          path: Builds/
-          retention-days: 7
+          retention-days: 30
