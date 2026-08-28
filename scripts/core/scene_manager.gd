@@ -10,13 +10,13 @@ var _current_scene: String = ""
 var _loading: bool = false
 var _load_progress: float = 0.0
 
-func register_scene(name: String, scene_data: Dictionary) -> void:
-	_scenes[name] = scene_data
-	print("[SceneManager] 注册场景: %s" % name)
+func register_scene(scene_name: String, scene_data: Dictionary) -> void:
+	_scenes[scene_name] = scene_data
+	print("[SceneManager] 注册场景: %s" % scene_name)
 
-func load_scene(name: String, additive: bool = false) -> bool:
-	if not name in _scenes:
-		print("[SceneManager] 场景不存在: %s" % name)
+func load_scene(scene_name: String, additive: bool = false) -> bool:
+	if not scene_name in _scenes:
+		print("[SceneManager] 场景不存在: %s" % scene_name)
 		return false
 	
 	if _loading:
@@ -25,24 +25,24 @@ func load_scene(name: String, additive: bool = false) -> bool:
 	
 	_loading = true
 	_load_progress = 0.0
-	print("[SceneManager] 开始加载场景: %s" % name)
+	print("[SceneManager] 开始加载场景: %s" % scene_name)
 	
 	# 模拟加载过程
-	var scene = _scenes[name]
-	_current_scene = name
+	var scene = _scenes[scene_name]
+	_current_scene = scene_name
 	_loading = false
 	_load_progress = 1.0
 	
-	print("[SceneManager] 场景加载完成: %s" % name)
+	print("[SceneManager] 场景加载完成: %s" % scene_name)
 	return true
 
-func unload_scene(name: String) -> bool:
-	if name == _current_scene:
+func unload_scene(scene_name: String) -> bool:
+	if scene_name == _current_scene:
 		_current_scene = ""
-		print("[SceneManager] 卸载当前场景: %s" % name)
+		print("[SceneManager] 卸载当前场景: %s" % scene_name)
 		return true
 	else:
-		print("[SceneManager] 场景未加载: %s" % name)
+		print("[SceneManager] 场景未加载: %s" % scene_name)
 		return false
 
 func get_current_scene() -> String:
