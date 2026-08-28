@@ -27,10 +27,13 @@ func _init(w: int = 64, h: int = 64, d: int = 50) -> void:
 	_initialize()
 
 func _initialize() -> void:
+	# 初始化三维数组
 	tiles.resize(width)
 	for x in range(width):
+		tiles[x] = []
 		tiles[x].resize(height)
 		for y in range(height):
+			tiles[x][y] = []
 			tiles[x][y].resize(depth)
 			for z in range(depth):
 				tiles[x][y][z] = _create_tile(x, y, z, AIR)
