@@ -1,12 +1,33 @@
-[gd_scene format=3 uid="uid://1477527dafa644ce"]
+[gd_scene load_steps=2 format=3]
 
-[ext_resource type="Script" uid="uid://9c78f2066f9849cc" path="res://scripts/main.gd" id="1"]
-[ext_resource type="Script" uid="uid://3716f572cb7e48cb" path="res://scripts/ui/game_hud.gd" id="2"]
+[ext_resource type="Script" path="res://scripts/main.gd" id="1"]
 
-[node name="Game" type="Node" unique_id=1254991799208523141]
+[node name="Game" type="Node"]
 script = ExtResource("1")
 
-[node name="GameWorld" type="Node" parent="." unique_id=2432612571306894642]
+[node name="GameWorld" type="Node" parent="."]
 
-[node name="GameHUD" type="CanvasLayer" parent="." unique_id=1436498994313516099]
-script = ExtResource("2")
+[node name="GameHUD" type="CanvasLayer" parent="."]
+layer = 10
+visible = false
+
+[node name="ResourceLabel" type="Label" parent="GameHUD"]
+layout_mode = 1
+offset_left = 10.0
+offset_top = 10.0
+text = "资源: 石头=0"
+theme_override_font_sizes/font_size = 18
+
+[node name="PowerLabel" type="Label" parent="GameHUD"]
+layout_mode = 1
+offset_left = 10.0
+offset_top = 40.0
+text = "电力: 0/0"
+theme_override_font_sizes/font_size = 18
+
+[node name="TimeLabel" type="Label" parent="GameHUD"]
+layout_mode = 1
+offset_left = 10.0
+offset_top = 70.0
+text = "第1天 00:00"
+theme_override_font_sizes/font_size = 18

@@ -1,15 +1,8 @@
-[gd_scene format=3 uid="uid://5d07d3d489784543"]
+[gd_scene load_steps=2 format=3]
 
-[ext_resource type="Script" uid="uid://9c78f2066f9849cc" path="res://scripts/main.gd" id="1"]
-[ext_resource type="Script" uid="uid://3716f572cb7e48cb" path="res://scripts/ui/game_hud.gd" id="2"]
+[ext_resource type="Script" path="res://scripts/main.gd" id="1"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bg"]
-bg_color = Color(0.05, 0.05, 0.1, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
-bg_color = Color(0.1, 0.1, 0.15, 0.9)
-
-[node name="Main" type="CanvasLayer" unique_id=1024238185631583871]
+[node name="Main" type="CanvasLayer"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -18,7 +11,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1")
 
-[node name="Background" type="ColorRect" parent="." unique_id=3424412946201481263]
+[node name="Background" type="ColorRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -27,7 +20,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.02, 0.02, 0.05, 1)
 
-[node name="UIContainer" type="Control" parent="." unique_id=845210344250332693]
+[node name="UIContainer" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -35,7 +28,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TitlePanel" type="Panel" parent="UIContainer" unique_id=4570101435099474362]
+[node name="TitlePanel" type="Panel" parent="UIContainer"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -48,9 +41,8 @@ offset_right = 250.0
 offset_bottom = 50.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = sub_resource("StyleBoxFlat_panel")
 
-[node name="TitleLabel" type="Label" parent="TitlePanel" unique_id=3278560478640890115]
+[node name="TitleLabel" type="Label" parent="TitlePanel"]
 layout_mode = 2
 anchors_preset = 10
 anchor_right = 1.0
@@ -61,7 +53,7 @@ text = "DrillDown 3D"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="SubtitleLabel" type="Label" parent="TitlePanel" unique_id=4580379813949245894]
+[node name="SubtitleLabel" type="Label" parent="TitlePanel"]
 layout_mode = 2
 anchors_preset = 10
 anchor_right = 1.0
@@ -73,7 +65,7 @@ text = "地下工厂建造游戏"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ButtonContainer" type="VBoxContainer" parent="TitlePanel" unique_id=1211787438131820222]
+[node name="ButtonContainer" type="VBoxContainer" parent="TitlePanel"]
 layout_mode = 2
 anchors_preset = 10
 anchor_right = 1.0
@@ -82,46 +74,17 @@ offset_bottom = 200.0
 grow_horizontal = 2
 theme_override_constants/separation = 20
 
-[node name="StartButton" type="Button" parent="TitlePanel/ButtonContainer" unique_id=116619203802170319]
+[node name="StartButton" type="Button" parent="TitlePanel/ButtonContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "开始游戏"
 
-[node name="SettingsButton" type="Button" parent="TitlePanel/ButtonContainer" unique_id=552527143964985169]
+[node name="SettingsButton" type="Button" parent="TitlePanel/ButtonContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "设置"
 
-[node name="ExitButton" type="Button" parent="TitlePanel/ButtonContainer" unique_id=403127070019841064]
+[node name="ExitButton" type="Button" parent="TitlePanel/ButtonContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "退出"
-
-[node name="GameHUD" type="CanvasLayer" parent="." unique_id=4322740358634398092]
-layer = 10
-visible = false
-
-[node name="ResourceLabel" type="Label" parent="GameHUD" unique_id=3034699926370834548]
-layout_mode = 1
-offset_left = 10.0
-offset_top = 10.0
-text = "资源: 石头=0"
-theme_override_font_sizes/font_size = 18
-
-[node name="PowerLabel" type="Label" parent="GameHUD" unique_id=2045089839774176836]
-layout_mode = 1
-offset_left = 10.0
-offset_top = 40.0
-text = "电力: 0/0"
-theme_override_font_sizes/font_size = 18
-
-[node name="TimeLabel" type="Label" parent="GameHUD" unique_id=1044133358104863212]
-layout_mode = 1
-offset_left = 10.0
-offset_top = 70.0
-text = "第1天 00:00"
-theme_override_font_sizes/font_size = 18
-
-[connection signal="pressed" from="TitlePanel/ButtonContainer/StartButton" to="Main" method="_on_start_pressed"]
-[connection signal="pressed" from="TitlePanel/ButtonContainer/SettingsButton" to="Main" method="_on_settings_pressed"]
-[connection signal="pressed" from="TitlePanel/ButtonContainer/ExitButton" to="Main" method="_on_exit_pressed"]
