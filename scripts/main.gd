@@ -7,15 +7,16 @@ var world_grid: Node
 var hud: Node
 var game_time: float = 0.0
 var is_running: bool = false
+const SEPARATOR: String = "============================================================"
 
 func _ready() -> void:
 	# 初始化系统
 	_init_systems()
 
 func _init_systems() -> void:
-	print("=" * 60)
+	print(SEPARATOR)
 	print("  DrillDown 3D Godot - 游戏初始化")
-	print("=" * 60)
+	print(SEPARATOR)
 	
 	# 创建 GameManager
 	game_manager = load("res://scripts/core/game_manager.gd").new()
