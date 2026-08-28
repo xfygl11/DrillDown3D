@@ -12,7 +12,7 @@ func _init(factory: Callable, max_size: int = 100) -> void:
 	_factory = factory
 	_max_size = max_size
 
-func get() -> Variant:
+func fetch() -> Variant:
 	if _pool.size() > 0:
 		var obj = _pool.pop_back()
 		_active_count += 1
