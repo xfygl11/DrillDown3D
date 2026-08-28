@@ -83,3 +83,16 @@ func load_game(filepath: String) -> bool:
 	if game_manager:
 		return game_manager.load_game(filepath)
 	return false
+
+# 按钮回调函数
+func _on_start_pressed() -> void:
+	print("[Main] 开始游戏按钮被点击")
+	start_game()
+
+func _on_settings_pressed() -> void:
+	print("[Main] 设置按钮被点击")
+	# TODO: 打开设置面板
+
+func _on_exit_pressed() -> void:
+	print("[Main] 退出按钮被点击")
+	get_tree().quit()

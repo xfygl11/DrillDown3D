@@ -88,3 +88,7 @@ text = "设置"
 layout_mode = 2
 size_flags_horizontal = 4
 text = "退出"
+
+[connection signal="pressed" from="TitlePanel/ButtonContainer/StartButton" to="Main" method="_on_start_pressed"]
+[connection signal="pressed" from="TitlePanel/ButtonContainer/SettingsButton" to="Main" method="_on_settings_pressed"]
+[connection signal="pressed" from="TitlePanel/ButtonContainer/ExitButton" to="Main" method="_on_exit_pressed"]
