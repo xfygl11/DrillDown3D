@@ -2,6 +2,8 @@
 # 对应 Python GameManager.py
 extends Node
 
+class_name GameManager
+
 enum GameState {
 	MENU,
 	PLAYING,

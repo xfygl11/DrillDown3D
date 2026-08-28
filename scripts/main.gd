@@ -2,9 +2,9 @@
 # 整合所有系统
 extends Node
 
-var game_manager: Node
-var world_grid: Node
-var hud: Node
+var game_manager: GameManager = null
+var world_grid: Node = null
+var hud: Control = null
 var game_time: float = 0.0
 var is_running: bool = false
 const SEPARATOR: String = "============================================================"
@@ -12,6 +12,8 @@ const SEPARATOR: String = "=====================================================
 func _ready() -> void:
 	# 初始化系统
 	_init_systems()
+	# 获取HUD引用
+	hud = get_node("GameHUD")
 	# 显示主菜单
 	_show_main_menu()
 
@@ -20,9 +22,11 @@ func _init_systems() -> void:
 	print("  DrillDown 3D Godot - 游戏初始化")
 	print(SEPARATOR)
 	
-	# 创建 GameManager
-	game_manager = load("res://scripts/core/game_manager.gd").new()
-	add_child(game_manager)
+	# 创建 GameManager (从autoload获取)
+	game_manager = get_node("/root/GameManager")
+	if game_manager == null:
+		game_manager = load("res://scripts/core/game_manager.gd").new()
+		add_child(game_manager)
 	
 	# 创建 WorldGrid
 	world_grid = load("res://scripts/game/world_grid.gd").new(32, 32, 30)
@@ -103,11 +107,7 @@ func _hide_main_menu() -> void:
 	print("[Main] 隐藏主菜单")
 
 func _show_game_ui() -> void:
-	# 创建并显示HUD
-	if hud == null:
-		hud = load("res://scripts/ui/game_hud.gd").new()
-		add_child(hud)
-	# 显示HUD
+	# 显示HUD（已在场景中）
 	if hud:
 		hud.visible = true
 		# 初始化HUD显示初始数据

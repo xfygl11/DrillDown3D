@@ -1,6 +1,6 @@
 # GameHUD - 游戏内界面
 # 对应 Python GameHUD.py
-extends CanvasLayer
+extends Control
 
 class_name GameHUD
 
