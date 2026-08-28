@@ -28,10 +28,13 @@ jobs:
           wget -q https://github.com/godotengine/godot/releases/download/4.2.1-stable/Godot_v4.2.1-stable_linux.x86_64.zip
           unzip -q Godot_v4.2.1-stable_linux.x86_64.zip
       
+      - name: Create Builds dir
+        run: mkdir -p Builds
+      
       - name: Build APK
         run: |
-          mkdir -p Builds
           ./Godot_v4.2.1-stable_linux.x86_64 --headless --path . --export-release Android Builds/DrillDown3D.apk
+          ls -la Builds/
       
       - name: Upload APK
         uses: actions/upload-artifact@v4
