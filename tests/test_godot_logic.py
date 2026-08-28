@@ -13,6 +13,8 @@ def test_game_manager():
     assert resources["stone"] == 100
     resources["stone"] -= 50
     assert resources["stone"] == 50
+    if resources["stone"] < 1000:
+        pass
     print("  ✓ GameManager 逻辑测试通过")
     return True
 
@@ -24,6 +26,7 @@ def test_world_grid():
             tiles[x][y][0] = 1 if hash((x, y)) % 3 == 0 else 2
     surface_count = sum(1 for x in range(10) for y in range(10) if tiles[x][y][0] != 0)
     assert surface_count == 100
+    assert tiles[5][5][9] == 0
     print("  ✓ WorldGrid 逻辑测试通过")
     return True
 
@@ -43,11 +46,11 @@ def test_power_network():
     print("\n[测试4] PowerNetwork 逻辑")
     generation = 100.0
     consumption = 80.0
-    assert generation >= consumption
+    assert generation >= consumption, "电力应该充足"
     generation = 50.0
-    assert generation < consumption
-    utilization = min(100.0, (100.0 / 80.0) * 100)
-    assert abs(utilization - 125.0) < 0.1
+    assert generation < consumption, "电力应该不足"
+    utilization = min(100.0, (generation / consumption) * 100)
+    assert abs(utilization - 62.5) < 0.1, f"利用率计算错误: {utilization}"
     print("  ✓ PowerNetwork 逻辑测试通过")
     return True
 
@@ -99,7 +102,27 @@ def test_conveyor_logic():
     removed = items.pop(0)
     assert removed["type"] == "stone"
     assert len(items) == 1
+    fill_pct = (len(items) / max_capacity) * 100
+    assert fill_pct == 28.57
     print("  ✓ 传送带逻辑测试通过")
+    return True
+
+def test_crafting_system():
+    print("\n[测试9] 合成系统逻辑")
+    recipes = {
+        "steel_ingot": {"inputs": {"iron_ore": 2}, "output": {"steel_ingot": 1}, "time": 5.0}
+    }
+    resources = {"iron_ore": 5, "coal": 2}
+    recipe = recipes["steel_ingot"]
+    can_craft = all(resources.get(item, 0) >= amount for item, amount in recipe["inputs"].items())
+    assert can_craft
+    for item, amount in recipe["inputs"].items():
+        resources[item] -= amount
+    for item, amount in recipe["output"].items():
+        resources[item] = resources.get(item, 0) + amount
+    assert resources["steel_ingot"] == 1
+    assert resources["iron_ore"] == 3
+    print("  ✓ 合成系统逻辑测试通过")
     return True
 
 def main():
@@ -115,7 +138,8 @@ def main():
         test_fluid_grid,
         test_save_load,
         test_mineral_distribution,
-        test_conveyor_logic
+        test_conveyor_logic,
+        test_crafting_system
     ]
     
     passed = failed = 0
