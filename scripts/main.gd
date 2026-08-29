@@ -14,8 +14,26 @@ func _ready() -> void:
 	_init_systems()
 	# 获取HUD引用
 	hud = get_node("GameHUD")
+	# 连接按钮信号
+	_connect_buttons()
 	# 确保菜单可见
 	_show_main_menu()
+
+func _connect_buttons() -> void:
+	# 手动连接按钮信号
+	var start_btn = get_node("MenuContainer/StartBtn")
+	var settings_btn = get_node("MenuContainer/SettingsBtn")
+	var exit_btn = get_node("MenuContainer/ExitBtn")
+	
+	if start_btn:
+		start_btn.pressed.connect(_on_start_pressed)
+		print("[Main] 已连接 StartBtn 信号")
+	if settings_btn:
+		settings_btn.pressed.connect(_on_settings_pressed)
+		print("[Main] 已连接 SettingsBtn 信号")
+	if exit_btn:
+		exit_btn.pressed.connect(_on_exit_pressed)
+		print("[Main] 已连接 ExitBtn 信号")
 
 func _init_systems() -> void:
 	print(SEPARATOR)
