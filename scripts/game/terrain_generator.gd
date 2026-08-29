@@ -10,9 +10,10 @@ var persistence: float = 0.5
 var lacunarity: float = 2.0
 
 func generate_terrain(width: int, height: int, depth: int) -> Array:
-	var terrain = []
+	var terrain: Array = []
 	terrain.resize(width)
 	for x in range(width):
+		terrain[x] = []
 		terrain[x].resize(height)
 		for y in range(height):
 			terrain[x][y] = _generate_column(x, y, depth)
