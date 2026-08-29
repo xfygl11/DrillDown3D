@@ -4,8 +4,8 @@ extends Building
 
 class_name Carpenter
 
-func _init() -> void:
-	super._init(BuildingType.CARPENTER)
+func _init(x: int = 0, y: int = 0, z: int = 0) -> void:
+	super._init(BuildingType.CARPENTER, x, y, z)
 	display_name = "木工坊"
 	size = Vector3i(2, 2, 1)
 	power_consumption = 15.0

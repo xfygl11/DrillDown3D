@@ -4,8 +4,8 @@ extends Building
 
 class_name DistillationColumn
 
-func _init() -> void:
-	super._init(BuildingType.DISTILLATION_COLUMN)
+func _init(x: int = 0, y: int = 0, z: int = 0) -> void:
+	super._init(BuildingType.DISTILLATION_COLUMN, x, y, z)
 	display_name = "分馏塔"
 	size = Vector3i(2, 4, 1)
 	power_consumption = 50.0

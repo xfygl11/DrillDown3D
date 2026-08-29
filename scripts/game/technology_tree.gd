@@ -62,8 +62,12 @@ func can_research(tech_id: String) -> bool:
 			return false
 	
 	# 检查资源
+	var gm = get_node("/root/GameManager")
 	for resource in tech["cost"]:
-		if GameManager.resources.get(resource, 0) < tech["cost"][resource]:
+		var current = 0
+		if gm:
+			current = gm.resources.get(resource, 0)
+		if current < tech["cost"][resource]:
 			return false
 	
 	return true
@@ -74,8 +78,10 @@ func start_research(tech_id: String) -> bool:
 	
 	# 扣除资源
 	var tech = technologies[tech_id]
+	var gm = get_node("/root/GameManager")
 	for resource in tech["cost"]:
-		GameManager.remove_resource(resource, tech["cost"][resource])
+		if gm:
+			gm.remove_resource(resource, tech["cost"][resource])
 	
 	research_progress[tech_id] = 0.0
 	print("[Tech] 开始研究: %s" % tech["name"])

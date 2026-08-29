@@ -4,8 +4,8 @@ extends Building
 
 class_name WaterWheel
 
-func _init() -> void:
-	super._init(BuildingType.WATER_WHEEL)
+func _init(x: int = 0, y: int = 0, z: int = 0) -> void:
+	super._init(BuildingType.WATER_WHEEL, x, y, z)
 	display_name = "水轮发电机"
 	size = Vector3i(2, 2, 1)
 	power_generated = 20.0

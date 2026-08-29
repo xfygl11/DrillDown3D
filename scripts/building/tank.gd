@@ -7,8 +7,8 @@ class_name Tank
 var stored_fluid: Dictionary = {}
 var max_capacity: float = 1000.0
 
-func _init() -> void:
-	super._init(BuildingType.TANK)
+func _init(x: int = 0, y: int = 0, z: int = 0) -> void:
+	super._init(BuildingType.TANK, x, y, z)
 	display_name = "流体储罐"
 	size = Vector3i(2, 2, 1)
 	description = "存储流体"

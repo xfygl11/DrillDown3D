@@ -3,9 +3,7 @@ extends "res://scripts/building/building.gd"
 
 class_name ElectricFurnace
 
-var power_consumption: float = 20.0
-
-func _init(x: int, y: int, z: int) -> void:
+func _init(x: int = 0, y: int = 0, z: int = 0) -> void:
 	super._init(BuildingType.ELECTRIC_FURNACE, x, y, z)
 	production_time = 2.0
 

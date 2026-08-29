@@ -4,8 +4,8 @@ extends Building
 
 class_name BallMill
 
-func _init() -> void:
-	super._init(BuildingType.BALL_MILL)
+func _init(x: int = 0, y: int = 0, z: int = 0) -> void:
+	super._init(BuildingType.BALL_MILL, x, y, z)
 	display_name = "球磨机"
 	size = Vector3i(2, 2, 1)
 	power_consumption = 30.0

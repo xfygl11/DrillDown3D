@@ -4,8 +4,8 @@ extends Building
 
 class_name Filter
 
-func _init() -> void:
-	super._init(BuildingType.FILTER)
+func _init(x: int = 0, y: int = 0, z: int = 0) -> void:
+	super._init(BuildingType.FILTER, x, y, z)
 	display_name = "过滤器"
 	size = Vector3i(1, 1, 1)
 	power_consumption = 5.0

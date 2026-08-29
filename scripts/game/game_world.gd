@@ -58,7 +58,9 @@ func _process(delta: float) -> void:
 				_handle_output(building, output)
 
 func _on_resource_gathered(resource_type: String, amount: int) -> void:
-	GameManager.add_resource(resource_type, amount)
+	var gm = get_node("/root/GameManager")
+	if gm:
+		gm.add_resource(resource_type, amount)
 	if audio_manager:
 		audio_manager.play_mine()
 
@@ -67,8 +69,9 @@ func _on_mining_complete(tile_type: String) -> void:
 		audio_manager.play_success()
 
 func _handle_output(building: Building, output: Dictionary) -> void:
-	if output.type in GameManager.resources:
-		GameManager.add_resource(output.type, output.amount)
+	var gm = get_node("/root/GameManager")
+	if gm and output.type in gm.resources:
+		gm.add_resource(output.type, output.amount)
 	else:
 		# 放入最近的存储
 		_store_item(building, output)

@@ -29,8 +29,10 @@ func start_construction(building_type: String, cost: Dictionary) -> bool:
 		return false
 	
 	# 扣除材料
+	var gm = get_node("/root/GameManager")
 	for item in cost:
-		GameManager.remove_resource(item, cost[item])
+		if gm:
+			gm.remove_resource(item, cost[item])
 	
 	build_queue.append({
 		"type": building_type,
@@ -41,8 +43,12 @@ func start_construction(building_type: String, cost: Dictionary) -> bool:
 	return true
 
 func can_afford(cost: Dictionary) -> bool:
+	var gm = get_node("/root/GameManager")
 	for item in cost:
-		if GameManager.resources.get(item, 0) < cost[item]:
+		var current = 0
+		if gm:
+			current = gm.resources.get(item, 0)
+		if current < cost[item]:
 			return false
 	return true
 

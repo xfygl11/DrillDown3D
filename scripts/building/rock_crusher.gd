@@ -4,8 +4,8 @@ extends Building
 
 class_name RockCrusher
 
-func _init() -> void:
-	super._init(BuildingType.ROCK_CRUSHER)
+func _init(x: int = 0, y: int = 0, z: int = 0) -> void:
+	super._init(BuildingType.ROCK_CRUSHER, x, y, z)
 	display_name = "岩石破碎机"
 	size = Vector3i(2, 2, 1)
 	power_consumption = 25.0

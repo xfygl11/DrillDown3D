@@ -4,8 +4,8 @@ extends Building
 
 class_name GasTurbine
 
-func _init() -> void:
-	super._init(BuildingType.GAS_TURBINE)
+func _init(x: int = 0, y: int = 0, z: int = 0) -> void:
+	super._init(BuildingType.GAS_TURBINE, x, y, z)
 	display_name = "燃气涡轮"
 	size = Vector3i(3, 3, 1)
 	power_generated = 200.0
@@ -14,6 +14,3 @@ func _init() -> void:
 func _process(delta: float) -> void:
 	super._process(delta)
 	# 燃气涡轮发电逻辑
-	if has_input_resource("gas"):
-		power_generated = power_consumption  # 修复：应该是power_generated
-		remove_input_resource("gas", delta * 10)

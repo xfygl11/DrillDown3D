@@ -4,8 +4,8 @@ extends Building
 
 class_name Hopper
 
-func _init() -> void:
-	super._init(BuildingType.HOPPER)
+func _init(x: int = 0, y: int = 0, z: int = 0) -> void:
+	super._init(BuildingType.HOPPER, x, y, z)
 	display_name = "漏斗"
 	size = Vector3i(1, 1, 1)
 	description = "收集并转移物品"
