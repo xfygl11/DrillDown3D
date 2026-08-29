@@ -1,9 +1,9 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1"]
 [ext_resource type="Script" path="res://scripts/ui/game_hud.gd" id="2"]
 
-[node name="Main" type="CanvasLayer"]
+[node name="Main" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -21,73 +21,64 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.02, 0.02, 0.05, 1)
 
-[node name="UIContainer" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="TitlePanel" type="Panel" parent="UIContainer"]
-layout_mode = 1
+[node name="MenuContainer" type="Control" parent="."]
+layout_mode = 2
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -250.0
-offset_top = -150.0
-offset_right = 250.0
-offset_bottom = 50.0
+offset_left = -300.0
+offset_top = -200.0
+offset_right = 300.0
+offset_bottom = 200.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TitleLabel" type="Label" parent="TitlePanel"]
-layout_mode = 2
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 60.0
-grow_horizontal = 2
-theme_override_font_sizes/font_size = 64
+[node name="Title" type="Label" parent="MenuContainer"]
+layout_mode = 1
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 600.0
+offset_bottom = 80.0
 text = "DrillDown 3D"
 horizontal_alignment = 1
 vertical_alignment = 1
+theme_override_font_sizes/font_size = 64
 
-[node name="SubtitleLabel" type="Label" parent="TitlePanel"]
-layout_mode = 2
-anchors_preset = 10
-anchor_right = 1.0
-offset_top = 60.0
-offset_bottom = 90.0
-grow_horizontal = 2
-theme_override_font_sizes/font_size = 24
+[node name="Subtitle" type="Label" parent="MenuContainer"]
+layout_mode = 1
+offset_left = 0.0
+offset_top = 80.0
+offset_right = 600.0
+offset_bottom = 120.0
 text = "地下工厂建造游戏"
 horizontal_alignment = 1
 vertical_alignment = 1
+theme_override_font_sizes/font_size = 24
 
-[node name="ButtonContainer" type="VBoxContainer" parent="TitlePanel"]
-layout_mode = 2
-anchors_preset = 10
-anchor_right = 1.0
-offset_top = 100.0
-offset_bottom = 200.0
-grow_horizontal = 2
-theme_override_constants/separation = 20
-
-[node name="StartButton" type="Button" parent="TitlePanel/ButtonContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
+[node name="StartBtn" type="Button" parent="MenuContainer"]
+layout_mode = 1
+offset_left = 100.0
+offset_top = 160.0
+offset_right = 500.0
+offset_bottom = 220.0
 text = "开始游戏"
 
-[node name="SettingsButton" type="Button" parent="TitlePanel/ButtonContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
+[node name="SettingsBtn" type="Button" parent="MenuContainer"]
+layout_mode = 1
+offset_left = 100.0
+offset_top = 230.0
+offset_right = 500.0
+offset_bottom = 290.0
 text = "设置"
 
-[node name="ExitButton" type="Button" parent="TitlePanel/ButtonContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
+[node name="ExitBtn" type="Button" parent="MenuContainer"]
+layout_mode = 1
+offset_left = 100.0
+offset_top = 300.0
+offset_right = 500.0
+offset_bottom = 360.0
 text = "退出"
 
 [node name="GameHUD" type="Control" parent="." visible=false]
@@ -126,7 +117,7 @@ offset_left = 10.0
 offset_top = 100.0
 text = "暂停"
 
-[connection signal="pressed" from="TitlePanel/ButtonContainer/StartButton" to="Main" method="_on_start_pressed"]
-[connection signal="pressed" from="TitlePanel/ButtonContainer/SettingsButton" to="Main" method="_on_settings_pressed"]
-[connection signal="pressed" from="TitlePanel/ButtonContainer/ExitButton" to="Main" method="_on_exit_pressed"]
+[connection signal="pressed" from="MenuContainer/StartBtn" to="Main" method="_on_start_pressed"]
+[connection signal="pressed" from="MenuContainer/SettingsBtn" to="Main" method="_on_settings_pressed"]
+[connection signal="pressed" from="MenuContainer/ExitBtn" to="Main" method="_on_exit_pressed"]
 [connection signal="pressed" from="GameHUD/PauseBtn" to="GameHUD" method="_on_pause_btn_pressed"]

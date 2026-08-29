@@ -1,8 +1,8 @@
 # Main - 游戏主入口
 # 整合所有系统
-extends Node
+extends Control
 
-var game_manager: GameManager = null
+var game_manager: Node = null
 var world_grid: Node = null
 var hud: Control = null
 var game_time: float = 0.0
@@ -14,7 +14,7 @@ func _ready() -> void:
 	_init_systems()
 	# 获取HUD引用
 	hud = get_node("GameHUD")
-	# 显示主菜单
+	# 确保菜单可见
 	_show_main_menu()
 
 func _init_systems() -> void:
@@ -22,11 +22,12 @@ func _init_systems() -> void:
 	print("  DrillDown 3D Godot - 游戏初始化")
 	print(SEPARATOR)
 	
-	# 创建 GameManager (从autoload获取)
+	# 从autoload获取GameManager
 	game_manager = get_node("/root/GameManager")
 	if game_manager == null:
-		game_manager = load("res://scripts/core/game_manager.gd").new()
-		add_child(game_manager)
+		print("[Main] 错误: 无法找到GameManager!")
+	else:
+		print("[Main] 找到GameManager单例")
 	
 	# 创建 WorldGrid
 	world_grid = load("res://scripts/game/world_grid.gd").new(32, 32, 30)
@@ -94,17 +95,20 @@ func load_game(filepath: String) -> bool:
 
 # 界面控制函数
 func _show_main_menu() -> void:
-	# 显示主菜单节点
-	var ui_container = get_node("UIContainer")
-	if ui_container:
-		ui_container.visible = true
+	# 显示菜单容器
+	var menu_container = get_node("MenuContainer")
+	if menu_container:
+		menu_container.visible = true
+		print("[Main] 显示主菜单 - MenuContainer visible = true")
+	else:
+		print("[Main] 错误: 找不到 MenuContainer 节点!")
 	print("[Main] 显示主菜单")
 
 func _hide_main_menu() -> void:
-	var ui_container = get_node("UIContainer")
-	if ui_container:
-		ui_container.visible = false
-	print("[Main] 隐藏主菜单")
+	var menu_container = get_node("MenuContainer")
+	if menu_container:
+		menu_container.visible = false
+		print("[Main] 隐藏主菜单")
 
 func _show_game_ui() -> void:
 	# 显示HUD（已在场景中）
