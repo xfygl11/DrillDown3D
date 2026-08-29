@@ -34,8 +34,8 @@ func play_ambience(track: String, loop: bool = true) -> void:
 
 func pause_all_audio() -> void:
 	# 暂停所有音频
-	AudioServer.set_master_volume_db(db_to_linear(0.0))
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"), -80.0)
 
 func resume_all_audio() -> void:
 	# 恢复所有音频
-	AudioServer.set_master_volume_db(db_to_linear(1.0))
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"), 0.0)
