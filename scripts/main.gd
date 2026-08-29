@@ -129,7 +129,6 @@ func create_game_hud() -> void:
 
 	# 创建共享字体主题
 	var theme = Theme.new()
-	var font = ThemeDB.get_builtin_font("main")
 	theme.set_font_size("font_size", "Label", 18)
 
 	# 资源标签
