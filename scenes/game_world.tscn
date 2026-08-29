@@ -1,0 +1,55 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/game/world_grid.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/game/terrain_generator.gd" id="2"]
+[ext_resource type="Mesh" path="res://assets/meshes/ground.mesh" id="3"]
+[ext_resource type="Texture" path="res://assets/textures/grass.png" id="4"]
+
+[node name="GameWorld" type="Node3D"]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+position = Vector3(0, 20, 20)
+rotation = Vector3(-0.5, 0, 0)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+position = Vector3(0, 20, 0)
+rotation = Vector3(0.5, 0.3, 0)
+shadow_enabled = true
+
+[node name="WorldGrid" type="Node3D" parent="."]
+
+[node name="Ground" type="MeshInstance3D" parent="WorldGrid"]
+position = Vector3(0, -0.5, 0)
+rotation = Vector3(0, 0, 0)
+
+[node name="GameHUD" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="ResourceLabel" type="Label" parent="GameHUD"]
+layout_mode = 1
+offset_left = 10.0
+offset_top = 10.0
+text = "资源: 石头=0 铁矿=0 铜矿=0 煤矿=0"
+theme_override_font_sizes/font_size = 18
+
+[node name="PowerLabel" type="Label" parent="GameHUD"]
+layout_mode = 1
+offset_left = 10.0
+offset_top = 40.0
+text = "电力: 0/0 [正常]"
+theme_override_font_sizes/font_size = 18
+
+[node name="TimeLabel" type="Label" parent="GameHUD"]
+layout_mode = 1
+offset_left = 10.0
+offset_top = 70.0
+text = "第1天 00:00"
+theme_override_font_sizes/font_size = 18
+
+[node name="PauseBtn" type="Button" parent="GameHUD"]
+layout_mode = 1
+offset_left = 10.0
+offset_top = 100.0
+text = "暂停"
+
+[connection signal="pressed" from="GameHUD/PauseBtn" to="GameHUD" method="_on_pause_btn_pressed"]
