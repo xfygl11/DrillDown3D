@@ -90,7 +90,7 @@ func _load_game_scene() -> void:
 	_generate_terrain()
 	
 	# 创建游戏HUD
-	_create_game_hud()
+	create_game_hud()
 	
 	print("[Main] 游戏场景加载完成")
 
@@ -126,15 +126,18 @@ func create_game_hud() -> void:
 	var game_hud = CanvasLayer.new()
 	game_hud.name = "GameHUD"
 	game_world_node.add_child(game_hud)
-	
+
+	# 创建共享字体主题
+	var theme = Theme.new()
+	var font = ThemeDB.get_builtin_font("main")
+	theme.set_font_size("font_size", "Label", 18)
+
 	# 资源标签
 	var resource_label = Label.new()
 	resource_label.name = "ResourceLabel"
 	resource_label.position = Vector2(10, 10)
 	resource_label.text = "资源: 石头=0 铁矿=0 铜矿=0 煤矿=0"
-	var font_size_18 = FontSize.new()
-	font_size_18.size = 18
-	resource_label.theme_override_font_sizes = font_size_18
+	resource_label.theme = theme
 	game_hud.add_child(resource_label)
 
 	# 电力标签
@@ -142,7 +145,7 @@ func create_game_hud() -> void:
 	power_label.name = "PowerLabel"
 	power_label.position = Vector2(10, 40)
 	power_label.text = "电力: 0/0 [正常]"
-	power_label.theme_override_font_sizes = font_size_18
+	power_label.theme = theme
 	game_hud.add_child(power_label)
 
 	# 时间标签
@@ -150,7 +153,7 @@ func create_game_hud() -> void:
 	time_label.name = "TimeLabel"
 	time_label.position = Vector2(10, 70)
 	time_label.text = "第1天 00:00"
-	time_label.theme_override_font_sizes = font_size_18
+	time_label.theme = theme
 	game_hud.add_child(time_label)
 	
 	# 暂停按钮
