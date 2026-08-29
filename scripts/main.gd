@@ -65,8 +65,10 @@ func _load_game_scene() -> void:
 	var camera = Camera3D.new()
 	camera.name = "Camera3D"
 	camera.position = Vector3(16, 30, 30)
-	camera.look_at(Vector3(16, 0, 16))
 	game_world_node.add_child(camera)
+	# 相机添加到树后再设置朝向
+	await get_tree().process_frame
+	camera.look_at(Vector3(16, 0, 16))
 	
 	# 添加光源
 	var light = DirectionalLight3D.new()
