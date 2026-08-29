@@ -132,23 +132,25 @@ func create_game_hud() -> void:
 	resource_label.name = "ResourceLabel"
 	resource_label.position = Vector2(10, 10)
 	resource_label.text = "资源: 石头=0 铁矿=0 铜矿=0 煤矿=0"
-	resource_label.theme_override_font_sizes/font_size = 18
+	var font_size_18 = FontSize.new()
+	font_size_18.size = 18
+	resource_label.theme_override_font_sizes = font_size_18
 	game_hud.add_child(resource_label)
-	
+
 	# 电力标签
 	var power_label = Label.new()
 	power_label.name = "PowerLabel"
 	power_label.position = Vector2(10, 40)
 	power_label.text = "电力: 0/0 [正常]"
-	power_label.theme_override_font_sizes/font_size = 18
+	power_label.theme_override_font_sizes = font_size_18
 	game_hud.add_child(power_label)
-	
+
 	# 时间标签
 	var time_label = Label.new()
 	time_label.name = "TimeLabel"
 	time_label.position = Vector2(10, 70)
 	time_label.text = "第1天 00:00"
-	time_label.theme_override_font_sizes/font_size = 18
+	time_label.theme_override_font_sizes = font_size_18
 	game_hud.add_child(time_label)
 	
 	# 暂停按钮
