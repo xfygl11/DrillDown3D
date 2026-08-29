@@ -4,8 +4,9 @@ extends Control
 
 var game_manager: Node = null
 var world_grid: Node = null
-var hud: Control = null
-var game_scene: Node = null
+var terrain_generator: Node = null
+var game_world_node: Node3D = null
+var hud: CanvasLayer = null
 var is_running: bool = false
 const SEPARATOR: String = "============================================================"
 
@@ -55,44 +56,76 @@ func start_game() -> void:
 	print("🎮 游戏开始！")
 
 func _load_game_scene() -> void:
-	# 卸载当前场景的UI
-	if hud:
-		hud.visible = false
-	
-	# 创建3D游戏场景
-	var game_world_node = Node3D.new()
+	# 创建3D游戏世界节点
+	game_world_node = Node3D.new()
 	game_world_node.name = "GameWorld"
 	add_child(game_world_node)
 	
 	# 添加相机
 	var camera = Camera3D.new()
 	camera.name = "Camera3D"
-	camera.position = Vector3(0, 20, 20)
-	camera.rotation = Vector3(-0.5, 0, 0)
+	camera.position = Vector3(16, 30, 30)
+	camera.look_at(Vector3(16, 0, 16))
 	game_world_node.add_child(camera)
 	
 	# 添加光源
 	var light = DirectionalLight3D.new()
 	light.name = "DirectionalLight3D"
-	light.position = Vector3(0, 20, 0)
+	light.position = Vector3(16, 40, 16)
 	light.rotation = Vector3(0.5, 0.3, 0)
 	light.shadow_enabled = true
 	game_world_node.add_child(light)
 	
-	# 添加世界网格
-	world_grid = load("res://scripts/game/world_grid.gd").new(32, 32, 30)
+	# 创建地形生成器
+	terrain_generator = TerrainGenerator.new()
+	terrain_generator.name = "TerrainGenerator"
+	game_world_node.add_child(terrain_generator)
+	
+	# 创建世界网格
+	world_grid = WorldGrid.new(32, 32, 30)
 	world_grid.name = "WorldGrid"
 	game_world_node.add_child(world_grid)
 	
+	# 生成地形
+	_generate_terrain()
+	
 	# 创建游戏HUD
-	_create_game_hud(game_world_node)
+	_create_game_hud()
 	
 	print("[Main] 游戏场景加载完成")
 
-func _create_game_hud(parent: Node) -> void:
+func _generate_terrain() -> void:
+	if terrain_generator and world_grid:
+		print("[Main] 开始生成地形...")
+		# 使用TerrainGenerator生成地形数据
+		var terrain_data = terrain_generator.generate_terrain(
+			world_grid.width,
+			world_grid.height,
+			world_grid.depth
+		)
+		
+		# 将地形数据写入WorldGrid
+		for x in range(world_grid.width):
+			for y in range(world_grid.height):
+				for z in range(world_grid.depth):
+					if z < terrain_data[x][y].size():
+						var tile = terrain_data[x][y][z]
+						var tile_dict = {
+							"x": x,
+							"y": y,
+							"z": z,
+							"type": tile.type,
+							"meta": 0,
+							"density": tile.density
+						}
+						world_grid.set_tile(x, y, z, tile_dict)
+		
+		print("[Main] 地形生成完成")
+
+func create_game_hud() -> void:
 	var game_hud = CanvasLayer.new()
 	game_hud.name = "GameHUD"
-	parent.add_child(game_hud)
+	game_world_node.add_child(game_hud)
 	
 	# 资源标签
 	var resource_label = Label.new()
@@ -164,13 +197,10 @@ func load_game(filepath: String) -> bool:
 
 # 界面控制函数
 func _show_main_menu() -> void:
-	# 显示主菜单容器
 	var menu_container = get_node("MenuContainer")
 	if menu_container:
 		menu_container.visible = true
 		print("[Main] 显示主菜单")
-	else:
-		print("[Main] 错误: 找不到 MenuContainer 节点!")
 
 func _hide_main_menu() -> void:
 	var menu_container = get_node("MenuContainer")
@@ -179,14 +209,11 @@ func _hide_main_menu() -> void:
 		print("[Main] 隐藏主菜单")
 
 func _hide_game_scene() -> void:
-	# 隐藏游戏场景
-	var game_world = get_node("GameWorld")
-	if game_world:
-		game_world.visible = false
+	if game_world_node:
+		game_world_node.visible = false
 		print("[Main] 隐藏游戏场景")
 
 func _connect_buttons() -> void:
-	# 手动连接按钮信号
 	var start_btn = get_node("MenuContainer/StartBtn")
 	var settings_btn = get_node("MenuContainer/SettingsBtn")
 	var exit_btn = get_node("MenuContainer/ExitBtn")
@@ -208,7 +235,6 @@ func _on_start_pressed() -> void:
 
 func _on_settings_pressed() -> void:
 	print("[Main] 设置按钮被点击")
-	# TODO: 打开设置面板
 
 func _on_exit_pressed() -> void:
 	print("[Main] 退出按钮被点击")
